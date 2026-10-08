@@ -1,0 +1,120 @@
+{% extends 'campusapp/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card p-4 mx-auto" style="max-width: 900px;">
+
+        <div class="row g-4">
+
+            <!-- Image -->
+            <div class="col-md-5">
+
+                {% if item.image %}
+
+                    <img src="{{ item.image.url }}"
+                         class="img-fluid rounded"
+                         style="width:100%; max-height:350px; object-fit:cover;">
+
+                {% else %}
+
+                    <div class="bg-light rounded p-5 text-center">
+                        📦<br>
+                        No image available
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Details -->
+            <div class="col-md-7">
+
+                <span class="badge
+                    {% if item.item_type == 'Lost' %}
+                        bg-danger
+                    {% else %}
+                        bg-success
+                    {% endif %}
+                    fs-6">
+
+                    {{ item.item_type }}
+
+                </span>
+
+                <h1 class="mt-3">
+                    {{ item.title }}
+                </h1>
+
+                <hr>
+
+                <p>
+                    <strong>📝 Description</strong><br>
+                    {{ item.description }}
+                </p>
+
+                <p>
+                    <strong>📍 Location</strong><br>
+                    {{ item.location }}
+                </p>
+                  {% if item.latitude and item.longitude %}
+
+<a
+    href="https://www.google.com/maps?q={{ item.latitude }},{{ item.longitude }}"
+    target="_blank"
+    class="btn btn-success mb-3">
+
+    🗺️ View on Map
+
+</a>
+
+{% endif %}
+                <p>
+                    <strong>📅 Date</strong><br>
+                    {{ item.date }}
+                </p>
+
+                <p>
+                    <strong>📞 Contact</strong><br>
+                    {{ item.contact }}
+                </p>
+
+                <p>
+                    <strong>📌 Status</strong><br>
+
+                    <span class="badge bg-primary">
+                        {{ item.status }}
+                    </span>
+
+                </p>
+
+                <div class="mt-4">
+
+                    <a href="{% url 'item_update' item.id %}"
+                       class="btn btn-warning">
+                        ✏️ Edit
+                    </a>
+
+                    <a href="{% url 'item_delete' item.id %}"
+                       class="btn btn-danger">
+                        🗑️ Delete
+                    </a>
+
+                    <a href="/"
+                       class="btn btn-secondary">
+                        ← Back
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #172554;
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            margin: 40px auto;
+        }
+
+        .form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #172554;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .helptext {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .errorlist {
+            color: #dc2626;
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="logo">
+            Campus Lost & Found
+        </div>
+
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="form-card">
+
+            <h1>{{ title }}</h1>
+
+            <p class="subtitle">
+                Provide complete details about the lost or found item.
+            </p>
+
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+
+
+                <!-- ITEM NAME -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.title.id_for_label }}">
+                        Item Name *
+                    </label>
+
+                    {{ form.title }}
+
+                    {{ form.title.errors }}
+
+                </div>
+
+
+                <!-- LOST / FOUND -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.item_type.id_for_label }}">
+                        Item Type *
+                    </label>
+
+                    {{ form.item_type }}
+
+                    {{ form.item_type.errors }}
+
+                </div>
+
+
+                <!-- HOW LOST -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.how_lost.id_for_label }}">
+                        How Lost / Found
+                    </label>
+
+                    {{ form.how_lost }}
+
+                    {{ form.how_lost.errors }}
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.description.id_for_label }}">
+                        Description *
+                    </label>
+
+                    {{ form.description }}
+
+                    {{ form.description.errors }}
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.location.id_for_label }}">
+                        Lost / Found Location *
+                    </label>
+
+                    {{ form.location }}
+
+                    {{ form.location.errors }}
+
+                </div>
+
+
+                <!-- CURRENT LOCATION -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.current_location.id_for_label }}">
+                        Current Location
+                    </label>
+
+                    {{ form.current_location }}
+
+                    {{ form.current_location.errors }}
+
+                </div>
+
+
+                <!-- LATITUDE + LONGITUDE -->
+
+                <div class="two-column">
+
+                    <div class="form-group">
+
+                        <label for="{{ form.latitude.id_for_label }}">
+                            Latitude
+                        </label>
+
+                        {{ form.latitude }}
+
+                        {{ form.latitude.errors }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.longitude.id_for_label }}">
+                            Longitude
+                        </label>
+
+                        {{ form.longitude }}
+
+                        {{ form.longitude.errors }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATE + CONTACT -->
+
+                <div class="two-column">
+
+                    <div class="form-group">
+
+                        <label for="{{ form.date.id_for_label }}">
+                            Date *
+                        </label>
+
+                        {{ form.date }}
+
+                        {{ form.date.errors }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.contact.id_for_label }}">
+                            Contact Number *
+                        </label>
+
+                        {{ form.contact }}
+
+                        {{ form.contact.errors }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- COST + STATUS -->
+
+                <div class="two-column">
+
+                    <div class="form-group">
+
+                        <label for="{{ form.estimated_cost.id_for_label }}">
+                            Approximate Cost
+                        </label>
+
+                        {{ form.estimated_cost }}
+
+                        {{ form.estimated_cost.errors }}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.status.id_for_label }}">
+                            Item Status
+                        </label>
+
+                        {{ form.status }}
+
+                        {{ form.status.errors }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.image.id_for_label }}">
+                        Item Image
+                    </label>
+
+                    {{ form.image }}
+
+                    {{ form.image.errors }}
+
+                </div>
+
+
+                <button type="submit" class="submit-btn">
+                    Save Item
+                </button>
+
+            </form>
+
+
+            <a href="{% url 'home' %}" class="back-btn">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
